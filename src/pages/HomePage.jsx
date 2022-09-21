@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
 import { getCoinsStart } from '../features/coinsSlice';
@@ -18,8 +18,11 @@ import SaveOutlinedIcon from '@mui/icons-material/SaveOutlined';
 import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
+import SaveListForm from '../components/SaveListForm';
 
 const Homepage = () => {
+  const [open, setOpen] = React.useState(false);
+
   const dispatch = useDispatch();
   const params = useParams();
   const navigate = useNavigate();
@@ -28,6 +31,14 @@ const Homepage = () => {
 
   const { loading, error, coinList } = useSelector((state) => state.coins);
   const { preListItems } = useSelector((state) => state.preList);
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   const handlePagination = (e) => {
     dispatch(getCoinsStart({ pageNumber: +e.target.textContent, navigate }));
@@ -40,6 +51,7 @@ const Homepage = () => {
 
   return (
     <>
+      <SaveListForm open={open} onClose={handleClose} onClick={handleClose} />
       {loading ? (
         <Box
           sx={{
@@ -70,9 +82,7 @@ const Homepage = () => {
               variant="contained"
               endIcon={<SaveOutlinedIcon />}
               disabled={preListItems.length === 0}
-              onClick={() => {
-                navigate(`/save-list`);
-              }}
+              onClick={handleClickOpen}
             >
               Guardar Lista
             </Button>

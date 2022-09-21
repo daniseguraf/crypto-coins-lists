@@ -28,6 +28,10 @@ const preListSlice = createSlice({
       state.loading = false;
       state.preListItems = [...action.payload];
     },
+    preListReset: (state) => {
+      state.loading = false;
+      state.preListItems = [];
+    },
   },
 });
 
@@ -37,6 +41,7 @@ export const {
   preListFailed,
   removeItemFromPreListStart,
   removeItemFromPreListSuccess,
+  preListReset,
 } = preListSlice.actions;
 
 export default preListSlice.reducer;
