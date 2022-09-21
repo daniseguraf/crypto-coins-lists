@@ -16,16 +16,7 @@ function* preListStartWorker(action) {
     const response = yield call(getCoinApi, id);
 
     if (response.status === 200) {
-      const { id, symbol, name, image } = response.data;
-
-      yield put(
-        preListSuccess({
-          id,
-          symbol,
-          name,
-          image,
-        })
-      );
+      yield put(preListSuccess(response.data));
     }
   } catch (error) {
     yield put(
@@ -40,7 +31,6 @@ function* preListStartWorker(action) {
 
 function* removeItemFromPreListStarttWorker(action) {
   const { preListItems, id } = action.payload;
-
   const updatedList = yield preListItems.filter((el) => el.id !== id);
 
   yield put(removeItemFromPreListSuccess(updatedList));

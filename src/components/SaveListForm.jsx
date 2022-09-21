@@ -9,7 +9,7 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { createList } from '../features/listsSlice';
+import { createListStart } from '../features/listsSlice';
 import { preListReset } from '../features/preListSlice';
 
 const SaveListForm = ({ open, onClose, onClick }) => {
@@ -27,8 +27,7 @@ const SaveListForm = ({ open, onClose, onClick }) => {
   };
 
   const handleSaveList = () => {
-    dispatch(createList({ name, list: preListItems }));
-    dispatch(preListReset());
+    dispatch(createListStart({ name, list: preListItems }));
     onClose();
   };
 

@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = { coinList: [], loading: false, error: null, page: '' };
+const initialState = { coinList: [], loading: false, error: null };
 
 const coinsSlice = createSlice({
   name: 'coins',
@@ -12,7 +12,6 @@ const coinsSlice = createSlice({
     getCoinsSuccess: (state, action) => {
       state.loading = false;
       state.coinList = action.payload;
-      state.page = action.payload.page;
     },
     getCoinsFailed: (state, action) => {
       state.loading = false;

@@ -1,62 +1,49 @@
-import { takeEvery, put, fork, call } from 'redux-saga/effects';
+import { takeEvery, put, fork, select } from 'redux-saga/effects';
 
 import {
   createListStart,
   createListSuccess,
+  deleteListStart,
   createListFailed,
+  deleteListSuccess,
 } from './listsSlice';
 
+import { preListReset } from '../features/preListSlice';
+
 // Worker sagas
-function* preListStartWorker(action) {
-  const { id } = action.payload;
+function* createListStartWorker(action) {
+  const { name, list } = action.payload;
 
-  try {
-    const response = yield call(getCoinApi, id);
-
-    if (response.status === 200) {
-      const { id, symbol, name, image } = response.data;
-
-      yield put(
-        preListSuccess({
-          id,
-          symbol,
-          name,
-          image,
-        })
-      );
-    }
-  } catch (error) {
+  if (name && list.length) {
     yield put(
-      preListFailed(
-        error?.response?.data.message
-          ? error.response.data.message
-          : error.message
-      )
+      createListSuccess({
+        name,
+        list,
+      })
     );
+
+    const { listItems } = yield select((state) => state.lists);
+
+    yield localStorage.setItem('listItems', JSON.stringify(listItems));
+    yield put(preListReset());
+  } else {
+    yield put(createListFailed('Error'));
   }
 }
 
-function* removeItemFromPreListStarttWorker(action) {
-  const { preListItems, id } = action.payload;
-
-  const updatedList = yield preListItems.filter((el) => el.id !== id);
-
-  yield put(removeItemFromPreListSuccess(updatedList));
+function* deleteListStarttWorker(action) {
+  // const { preListItems, id } = action.payload;
+  // const updatedList = yield preListItems.filter((el) => el.id !== id);
+  // yield put(removeItemFromPreListSuccess(updatedList));
 }
 
 // Watcher sagas
-function* preListWatcher() {
-  yield takeEvery(preListStart.type, preListStartWorker);
+function* createListWatcher() {
+  yield takeEvery(createListStart.type, createListStartWorker);
 }
 
-function* removeItemFromPreListWatcher() {
-  yield takeEvery(
-    removeItemFromPreListStart.type,
-    removeItemFromPreListStarttWorker
-  );
+function* deleteListWatcher() {
+  yield takeEvery(deleteListStart.type, deleteListStarttWorker);
 }
 
-export const preListSagas = [
-  fork(preListWatcher),
-  fork(removeItemFromPreListWatcher),
-];
+export const listsSagas = [fork(createListWatcher), fork(deleteListWatcher)];
