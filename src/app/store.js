@@ -7,9 +7,19 @@ import rootSaga from './rootSaga';
 let sagaMiddleware = createSagaMiddleware();
 const middleware = [sagaMiddleware];
 
+const listItemsFromStorage = localStorage.getItem('listItems')
+  ? JSON.parse(localStorage.getItem('listItems'))
+  : [];
+
+const preloadedState = {
+  lists: {
+    listItems: listItemsFromStorage,
+  },
+};
 const store = configureStore({
   reducer: rootReducer,
   middleware,
+  preloadedState,
 });
 
 sagaMiddleware.run(rootSaga);
