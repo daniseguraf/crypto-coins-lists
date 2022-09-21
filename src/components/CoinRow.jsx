@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { favoritesStart } from '../features/favoritesSlice';
+import {
+  preListStart,
+  removeItemFromPreListStart,
+} from '../features/preListSlice';
 
 import Box from '@mui/material/Box';
 import TableRow from '@mui/material/TableRow';
@@ -24,7 +27,7 @@ const CoinRow = ({
 
   const dispatch = useDispatch();
 
-  const { favoritesList } = useSelector((state) => state.favorites);
+  const { preListItems } = useSelector((state) => state.preList);
 
   const formatter = new Intl.NumberFormat('en-US', {
     style: 'currency',
@@ -45,16 +48,16 @@ const CoinRow = ({
 
   const handleFavorite = () => {
     if (!isFavorite) {
-      dispatch(favoritesStart({ id }));
+      dispatch(preListStart({ id }));
     } else {
-      dispatch();
+      dispatch(removeItemFromPreListStart({ preListItems, id }));
     }
   };
 
   useEffect(() => {
-    const fav = favoritesList.find((el) => el.id === id);
+    const fav = preListItems.find((el) => el.id === id);
     setIsFavorite(fav && true);
-  }, [favoritesList, id]);
+  }, [preListItems, id]);
 
   return (
     <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>

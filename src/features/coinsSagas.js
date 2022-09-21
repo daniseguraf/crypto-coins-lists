@@ -4,7 +4,7 @@ import { getCoinsStart, getCoinsSuccess, getCoinsFailed } from './coinsSlice';
 
 // Worker sagas
 function* getCoinsStartWorker(action) {
-  const { pageNumber, navigate } = action.payload;
+  const { pageNumber } = action.payload;
 
   try {
     const response = yield call(getCoinsApi, +pageNumber);
@@ -12,10 +12,6 @@ function* getCoinsStartWorker(action) {
     if (response.status === 200) {
       yield delay(250);
       yield put(getCoinsSuccess(response.data));
-
-      if (navigate) {
-        navigate(`/page/${pageNumber}`);
-      }
     }
   } catch (error) {
     yield put(

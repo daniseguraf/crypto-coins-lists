@@ -1,10 +1,10 @@
 import { combineReducers } from '@reduxjs/toolkit';
 import coinsReducer from '../features/coinsSlice';
-import favoritesReducer from '../features/favoritesSlice';
+import preListReducer from '../features/preListSlice';
 
 const rootReducer = combineReducers({
   coins: coinsReducer,
-  favorites: favoritesReducer,
+  preList: preListReducer,
 });
 
 export default rootReducer;
