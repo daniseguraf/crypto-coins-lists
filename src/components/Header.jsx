@@ -1,49 +1,49 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
 import Sidebar from '../components/Sidebar';
 
 const Header = () => {
-  const [open, setOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const { listItems } = useSelector((state) => state.lists);
 
-  const toggleDrawer = (open) => (event) => {
-    if (
-      event.type === 'keydown' &&
-      (event.key === 'Tab' || event.key === 'Shift')
-    ) {
-      return;
-    }
-
-    setOpen(!open);
-  };
+  const navigate = useNavigate();
 
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
+        <Toolbar
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+          }}
+        >
+          <Typography
+            variant="h6"
+            noWrap
+            component="div"
+            sx={{ cursor: 'pointer' }}
+            onClick={() => navigate('/')}
           >
-            <MenuIcon />
-          </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             Crypto Coins
           </Typography>
-          <Button color="inherit" onClick={toggleDrawer(true)}>
-            My Lists
+          <Button
+            color="inherit"
+            variant="outlined"
+            onClick={() => setIsOpen(true)}
+          >
+            Mis Listas {listItems.length > 0 && `(${listItems.length})`}
           </Button>
         </Toolbar>
       </AppBar>
-      <Sidebar open={open} onClose={toggleDrawer(false)} />
+      <Sidebar isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </Box>
   );
 };

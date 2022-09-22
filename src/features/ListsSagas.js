@@ -1,5 +1,5 @@
 import { takeEvery, put, fork, select } from 'redux-saga/effects';
-
+import { v4 as uuidv4 } from 'uuid';
 import {
   createListStart,
   createListSuccess,
@@ -17,6 +17,7 @@ function* createListStartWorker(action) {
   if (name && list.length) {
     yield put(
       createListSuccess({
+        id: uuidv4(),
         name,
         list,
       })

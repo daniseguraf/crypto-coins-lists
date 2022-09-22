@@ -7,7 +7,7 @@ const initialState = {
 };
 
 const listsSlice = createSlice({
-  name: 'Lists',
+  name: 'lists',
   initialState,
   reducers: {
     createListStart: (state) => {
