@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
 import {
   preListStart,
   removeItemFromPreListStart,
@@ -22,10 +23,13 @@ const CoinRow = ({
   price_change_percentage_7d_in_currency,
   total_volume,
   market_cap,
+  hasFavoriteButton,
 }) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
   const dispatch = useDispatch();
+  // const location = useLocation();
+  // console.log(location);
 
   const { preListItems } = useSelector((state) => state.preList);
 
@@ -60,10 +64,17 @@ const CoinRow = ({
   }, [preListItems, id]);
 
   return (
-    <TableRow sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+    <TableRow
+      hover
+      role="checkbox"
+      tabIndex={-1}
+      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+    >
       {/* Rank */}
       <TableCell align="right">
-        <BtnFavorite isFavorite={isFavorite} onClick={handleFavorite} />
+        {hasFavoriteButton && (
+          <BtnFavorite isFavorite={isFavorite} onClick={handleFavorite} />
+        )}
         {market_cap_rank}
       </TableCell>
 

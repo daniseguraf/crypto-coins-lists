@@ -25,7 +25,10 @@ function* createListStartWorker(action) {
 
     const { listItems } = yield select((state) => state.lists);
 
-    yield localStorage.setItem('listItems', JSON.stringify(listItems));
+    yield localStorage.setItem(
+      'listItems',
+      window.btoa(JSON.stringify(listItems))
+    );
     yield put(preListReset());
   } else {
     yield put(createListFailed('Error'));

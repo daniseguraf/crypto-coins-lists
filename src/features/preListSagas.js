@@ -16,7 +16,7 @@ function* preListStartWorker(action) {
     const response = yield call(getCoinApi, id);
 
     if (response.status === 200) {
-      yield put(preListSuccess(response.data));
+      yield put(preListSuccess(response.data[0]));
     }
   } catch (error) {
     yield put(

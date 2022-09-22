@@ -84,7 +84,7 @@ const Homepage = () => {
               disabled={preListItems.length === 0}
               onClick={handleClickOpen}
             >
-              Guardar Lista
+              Save List
             </Button>
           </Box>
 
@@ -105,7 +105,7 @@ const Homepage = () => {
               </TableHead>
               <TableBody>
                 {coinList.map((row) => (
-                  <CoinRow key={row.id} {...row} />
+                  <CoinRow key={row.id} hasFavoriteButton={true} {...row} />
                 ))}
               </TableBody>
             </Table>

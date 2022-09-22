@@ -1,5 +1,5 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
@@ -23,7 +23,7 @@ const Sidebar = ({ isOpen, onClose }) => {
   const { listItems } = useSelector((state) => state.lists);
 
   const handleClick = (el) => {
-    navigate(`/listas/${el}`);
+    navigate(`/lists/${el}`);
     onClose();
   };
 
@@ -51,7 +51,7 @@ const Sidebar = ({ isOpen, onClose }) => {
             paddingBottom: '0.5rem',
           }}
         >
-          <Typography variant="h5">Mis Listas</Typography>
+          <Typography variant="h5">My Lists</Typography>
           <IconButton aria-label="close" color="primary" onClick={onClose}>
             <CloseIcon />
           </IconButton>
@@ -63,10 +63,11 @@ const Sidebar = ({ isOpen, onClose }) => {
           }}
         >
           {listItems.length === 0 ? (
-            <Alert severity="info">No tienes listas creadas.</Alert>
+            <Alert severity="info">You don't have created lists yet.</Alert>
           ) : (
             listItems.map((el) => (
               <Card
+                key={el.id}
                 variant="outlined"
                 sx={{ minWidth: 275, marginBottom: '1.25rem' }}
               >
@@ -76,7 +77,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                   </Typography>
                   <List>
                     {el.list.map((item) => (
-                      <ListItem disablePadding>
+                      <ListItem key={item.id} disablePadding>
                         <Typography
                           sx={{ fontSize: 14 }}
                           color="text.secondary"
@@ -90,7 +91,7 @@ const Sidebar = ({ isOpen, onClose }) => {
                 </CardContent>
                 <CardActions>
                   <Button size="small" onClick={() => handleClick(el.id)}>
-                    Ver Más
+                    See List
                   </Button>
                 </CardActions>
               </Card>

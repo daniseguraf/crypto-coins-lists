@@ -14,6 +14,6 @@ export const getCoinsApi = async (pageNumber = '') => {
 // @desc get coin by ID
 export const getCoinApi = async (coinId) => {
   return await axios.get(
-    `${path}/${coinId}?localization=false&tickers=false&market_data=false&community_data=false&developer_data=false&sparkline=false`
+    `${path}/markets?vs_currency=usd&ids=${coinId}&order=market_cap_desc&sparkline=false&price_change_percentage=1h%2C24h%2C7d`
   );
 };

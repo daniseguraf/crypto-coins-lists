@@ -8,7 +8,7 @@ let sagaMiddleware = createSagaMiddleware();
 const middleware = [sagaMiddleware];
 
 const listItemsFromStorage = localStorage.getItem('listItems')
-  ? JSON.parse(localStorage.getItem('listItems'))
+  ? JSON.parse(window.atob(localStorage.getItem('listItems')))
   : [];
 
 const preloadedState = {
