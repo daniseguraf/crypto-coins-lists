@@ -39,7 +39,7 @@ const Header = () => {
             variant="outlined"
             onClick={() => setIsOpen(true)}
           >
-            Mis Listas {listItems.length > 0 && `(${listItems.length})`}
+            My Lists {listItems.length > 0 && `(${listItems.length})`}
           </Button>
         </Toolbar>
       </AppBar>

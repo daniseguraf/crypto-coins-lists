@@ -3,8 +3,8 @@ import { v4 as uuidv4 } from 'uuid';
 import {
   createListStart,
   createListSuccess,
-  deleteListStart,
   createListFailed,
+  deleteListStart,
   deleteListSuccess,
 } from './listsSlice';
 
@@ -36,9 +36,16 @@ function* createListStartWorker(action) {
 }
 
 function* deleteListStarttWorker(action) {
-  // const { preListItems, id } = action.payload;
-  // const updatedList = yield preListItems.filter((el) => el.id !== id);
-  // yield put(removeItemFromPreListSuccess(updatedList));
+  const { id } = action.payload;
+  const { listItems } = yield select((state) => state.lists);
+
+  const updatedList = yield listItems.filter((el) => el.id !== id);
+
+  yield put(deleteListSuccess(updatedList));
+  yield localStorage.setItem(
+    'listItems',
+    window.btoa(JSON.stringify(updatedList))
+  );
 }
 
 // Watcher sagas

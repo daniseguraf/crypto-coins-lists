@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import Box from '@mui/material/Box';
@@ -15,9 +15,14 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
+import DeleteIcon from '@mui/icons-material/Delete';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import Stack from '@mui/material/Stack';
+import { deleteListStart } from '../features/listsSlice';
 
 const Sidebar = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const drawerWidth = 350;
 
   const { listItems } = useSelector((state) => state.lists);
@@ -25,6 +30,10 @@ const Sidebar = ({ isOpen, onClose }) => {
   const handleClick = (el) => {
     navigate(`/lists/${el}`);
     onClose();
+  };
+
+  const handleDelete = (id) => {
+    dispatch(deleteListStart({ id }));
   };
 
   return (
@@ -90,9 +99,24 @@ const Sidebar = ({ isOpen, onClose }) => {
                   </List>
                 </CardContent>
                 <CardActions>
-                  <Button size="small" onClick={() => handleClick(el.id)}>
-                    See List
-                  </Button>
+                  <Stack direction="row" spacing={2}>
+                    <Button
+                      size="small"
+                      variant="text"
+                      color="error"
+                      onClick={() => handleDelete(el.id)}
+                    >
+                      Delete List
+                    </Button>
+                    <Button
+                      size="small"
+                      variant="contained"
+                      color="success"
+                      onClick={() => handleClick(el.id)}
+                    >
+                      See List
+                    </Button>
+                  </Stack>
                 </CardActions>
               </Card>
             ))
