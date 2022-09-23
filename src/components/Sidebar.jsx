@@ -16,7 +16,7 @@ import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import Stack from '@mui/material/Stack';
-import { deleteListStart } from '../features/listsSlice';
+import { deleteListStart } from './../features/listsSlice';
 
 const Sidebar = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
