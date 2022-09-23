@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
-import {
-  preListStart,
-  removeItemFromPreListStart,
-} from '../features/preListSlice';
 
 import Box from '@mui/material/Box';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import BtnFavorite from '../components/BtnFavorite';
+import {
+  preListStart,
+  removeItemFromPreListStart,
+} from '../features/preListSlice';
 
 const CoinRow = ({
   id,
@@ -28,8 +27,6 @@ const CoinRow = ({
   const [isFavorite, setIsFavorite] = useState(false);
 
   const dispatch = useDispatch();
-  // const location = useLocation();
-  // console.log(location);
 
   const { preListItems } = useSelector((state) => state.preList);
 
@@ -72,10 +69,18 @@ const CoinRow = ({
     >
       {/* Rank */}
       <TableCell align="right">
-        {hasFavoriteButton && (
-          <BtnFavorite isFavorite={isFavorite} onClick={handleFavorite} />
-        )}
-        {market_cap_rank}
+        <Box
+          sx={{
+            display: 'flex',
+            justifyContent: 'space-around',
+            alignItems: 'center',
+          }}
+        >
+          {hasFavoriteButton && (
+            <BtnFavorite isFavorite={isFavorite} onClick={handleFavorite} />
+          )}
+          <span>{market_cap_rank}</span>
+        </Box>
       </TableCell>
 
       {/* Name & symbol */}

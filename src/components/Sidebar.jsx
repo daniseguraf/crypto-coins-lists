@@ -15,8 +15,6 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import DeleteIcon from '@mui/icons-material/Delete';
-import VisibilityIcon from '@mui/icons-material/Visibility';
 import Stack from '@mui/material/Stack';
 import { deleteListStart } from '../features/listsSlice';
 

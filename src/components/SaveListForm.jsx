@@ -1,6 +1,5 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
@@ -19,7 +18,30 @@ const schema = yup
       .string()
       .required('List Name is required')
       .min(3, 'Minimum 3 characters')
-      .max(8, 'Maximun 8 characters'),
+      .max(8, 'Maximun 25 characters')
+      .test(
+        'isValidPass',
+        'At least an uppercase, lowercase and number is required',
+        (value, context) => {
+          const hasUpperCase = /[A-Z]/.test(value);
+          const hasLowerCase = /[a-z]/.test(value);
+          const hasNumber = /[0-9]/.test(value);
+
+          let validConditions = 0;
+          const numberOfMustBeValidConditions = 3;
+
+          const conditions = [hasLowerCase, hasUpperCase, hasNumber];
+
+          conditions.forEach((condition) =>
+            condition ? validConditions++ : null
+          );
+
+          if (validConditions >= numberOfMustBeValidConditions) {
+            return true;
+          }
+          return false;
+        }
+      ),
   })
   .required();
 
@@ -59,7 +81,7 @@ const SaveListForm = ({ open, onClose, onClick }) => {
     <Dialog open={open} onClose={onClose}>
       <DialogTitle>Create New List</DialogTitle>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <DialogContent>
+        <DialogContent sx={{ width: '300px' }}>
           <TextField
             error={!!errors.listName}
             helperText={errors.listName?.message}

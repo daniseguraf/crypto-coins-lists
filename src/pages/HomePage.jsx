@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, useNavigate } from 'react-router-dom';
-import { getCoinsStart } from '../features/coinsSlice';
 
 import Container from '@mui/material/Container';
 import Table from '@mui/material/Table';
@@ -19,6 +18,7 @@ import Box from '@mui/material/Box';
 import CircularProgress from '@mui/material/CircularProgress';
 import Alert from '@mui/material/Alert';
 import SaveListForm from '../components/SaveListForm';
+import { getCoinsStart } from '../features/coinsSlice';
 
 const Homepage = () => {
   const [open, setOpen] = React.useState(false);
